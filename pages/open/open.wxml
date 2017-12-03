@@ -1,0 +1,88 @@
+<view class="toptip" style="height:{{ isToptipShow ? '30px' : '0' }}">{{ toptip }}</view>
+<!-- <image src="/assets/images/mahjong.png" mode="widthFix" class="banner"></image> -->
+<view class="avatar_wrapper">
+    <image src="{{ avatarUrl }}" mode="aspectFit" class="avatar"></image>
+    <view class="nickname"> {{ nickName }} </view>
+</view>
+<form bindsubmit="formSubmit">
+    <view class="section">
+        <view class="section__title">勾兑方式</view>
+        <input name="input" placeholder="微信/电话/其他" />
+    </view>
+    <view class="section">
+        <view class="section__title">想和谁组局</view>
+        <input name="input" placeholder="请选择组局对象" disabled='true' value="{{ group }}" class="{{ isGroupCollapse ? 'collapsed' : 'open' }}" />
+    </view>
+    <scroll-view class="selection_group" scroll-x>
+        <view class="selection_wrapper">
+            <view class="selection selected">18-25
+                <text>岁</text>
+            </view>
+            <view class="selection">26-30
+                <text>岁</text>
+            </view>
+            <view class="selection">30-45
+                <text>岁</text>
+            </view>
+            <view class="selection">45
+                <text>岁+</text>
+            </view>
+            <view class="selection">不限
+            </view>
+        </view>
+    </scroll-view>
+    <view class="section">
+        <view class="section__title">差几人</view>
+        <input name="input" placeholder="请选择组局人数" disabled='true' value="{{ num }}" class="{{ isGroupCollapse ? 'collapsed' : 'open' }}" />
+    </view>
+    <scroll-view class="selection_group" scroll-x>
+        <view class="selection_wrapper">
+            <view class="selection selected">18-25
+                <text>岁</text>
+            </view>
+            <view class="selection">26-30
+                <text>岁</text>
+            </view>
+            <view class="selection">30-45
+                <text>岁</text>
+            </view>
+            <view class="selection">45
+                <text>岁+</text>
+            </view>
+            <view class="selection">不限
+            </view>
+        </view>
+    </scroll-view>
+    <view class="section section_gap">
+        <view class="section__title">switch</view>
+        <switch name="switch" />
+    </view>
+    <view class="section section_gap">
+        <view class="section__title">slider</view>
+        <slider name="slider" show-value></slider>
+    </view>
+
+    <view class="section section_gap">
+        <view class="section__title">radio</view>
+        <radio-group name="radio-group">
+            <label>
+                <radio value="radio1" />radio1</label>
+            <label>
+                <radio value="radio2" />radio2</label>
+        </radio-group>
+    </view>
+    <view class="section section_gap">
+        <view class="section__title">checkbox</view>
+        <checkbox-group name="checkbox">
+            <label>
+                <checkbox value="checkbox1" />checkbox1</label>
+            <label>
+                <checkbox value="checkbox2" />checkbox2</label>
+        </checkbox-group>
+    </view>
+    <view class="btn-area">
+        <button formType="submit" class="btn">Submit</button>
+    </view>
+</form>
+
+<button bindtap='toggleToptip'>切换</button>

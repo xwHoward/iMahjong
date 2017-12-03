@@ -1,0 +1,2 @@
+<map id="map" longitude="104.063269999" latitude="30.66074" scale="14" bindcontroltap="controltap" bindmarkertap="markertap" controls="{{controls}}" markers="{{markers}}" bindregionchange="regionchange" show-location style="width: 100%; height: {{ mapHeight }}px;" show-location="true"></map>
+<button class="btn" bindtap='open'><image src="/assets/images/find-l.png"></image>组局<image src="/assets/images/find-r.png"></image></button>

@@ -1,0 +1,12 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/open/open"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#ffe30d",
+    "navigationBarTitleText": "i约麻",
+    "navigationBarTextStyle":"black"
+  }
+}
