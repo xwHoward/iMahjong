@@ -1,7 +1,6 @@
 const AV = require('../../libs/av-weapp-min.js');
 const app = getApp()
-const mapHeight = app.globalData.windowHeight - 50
-console.log(mapHeight)
+const mapHeight = app.globalData.windowHeight - 60
 Page({
     data: {
         mapHeight: mapHeight,
@@ -12,7 +11,16 @@ Page({
             longitude: 104.063269,
             width: 32,
             height: 32,
-            callout: { content: '待约', color: '#515151', fontSize: 12, borderRadius: 4, bgColor: '#ffe30d', padding: 4, boxShadow: '0 0 6px 0 #515151', display: 'ALWAYS' },
+            callout: {
+                content: '待约',
+                color: '#515151',
+                fontSize: 12,
+                borderRadius: 4,
+                bgColor: '#ffe30d',
+                padding: 4,
+                boxShadow: '0 0 6px 0 #515151',
+                display: 'ALWAYS'
+            },
             // label: { color:'#ff9800', fontSize:12, content:'label', x:10, y:0 }
         }],
         controls: [{

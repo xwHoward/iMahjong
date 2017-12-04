@@ -1,6 +1,44 @@
 const AV = require('../../libs/av-weapp-min.js');
+import { timeFormatter } from '../../utils/util.js'
 const app = getApp()
-
+const groups = [{
+    gid: 0,
+    gdesc: '小鲜肉',
+    vol: '18~25岁'
+}, {
+    gid: 1,
+    gdesc: '老腊肉',
+    vol: '26~30岁'
+}, {
+    gid: 2,
+    gdesc: '老油条',
+    vol: '30~45岁'
+}, {
+    gid: 3,
+    gdesc: '老麻手',
+    vol: '45岁+'
+}, {
+    gid: 4,
+    gdesc: '不限',
+    vol: ''
+}]
+const seats = [{
+    sid: 0,
+    sdesc: '三缺一',
+    vol: '1人'
+}, {
+    sid: 1,
+    sdesc: '差两位',
+    vol: '2人'
+}, {
+    sid: 2,
+    sdesc: '一缺三',
+    vol: '3人'
+}, {
+    sid: 3,
+    sdesc: '其他',
+    vol: 'more'
+}]
 Page({
 
     /**
@@ -8,12 +46,27 @@ Page({
      */
     data: {
         isToptipShow: false,
-        toptip: '请正确填写所有字段',
+        toptipContent: '请正确填写所有字段',
         avatarUrl: '/assets/heads/emoji-1.png',
         nickName: '未登录',
-        isGroupCollapse: true
+        groups: groups,
+        isGroupCollapse: true,
+        selectedGroup: '不限',
+        selectedGroupIndex: 0,
+        seats: seats,
+        selectedSeat: '三缺一',
+        selectedSeatIndex: 4,
+        isSeatsCollapse: true,
+        selectedAddress: '',
+        now: timeFormatter(new Date()),
+        time: '全天'
     },
-
+    _matchObject: {
+        time: {
+            desc: '全天',
+            timeType: 'all'
+        }
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -27,11 +80,20 @@ Page({
                 })
         }
     },
-
-    toggleToptip: function () {
+    _toptipTimer: null,
+    _showToptip: function (msg) {
+        if (this._toptipTimer) {
+            clearTimeout(this._toptipTimer)
+        }
         this.setData({
-            isToptipShow: !this.data.isToptipShow
+            isToptipShow: true,
+            toptipContent: msg
         })
+        this._toptipTimer = setTimeout(() => {
+            this.setData({
+                isToptipShow: false
+            })
+        }, 2000)
     },
 
     /**
@@ -63,31 +125,82 @@ Page({
         });
     },
 
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
+    toggleGroup: function (e) {
+        this.setData({
+            isGroupCollapse: !this.data.isGroupCollapse
+        })
     },
 
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
+    toggleSeats: function (e) {
+        this.setData({
+            isSeatsCollapse: !this.data.isSeatsCollapse
+        })
     },
 
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
+    setGroup: function (e) {
+        const index = e.target.dataset.index || e.currentTarget.dataset.index
+        this.setData({
+            selectedGroup: groups[index].gdesc,
+            selectedGroupIndex: index
+        })
     },
 
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
+    setSeat: function (e) {
+        const index = e.target.dataset.index || e.currentTarget.dataset.index
+        this.setData({
+            selectedSeat: seats[index].sdesc,
+            selectedSeatIndex: index
+        })
+    },
 
+    bindTimeChange: function (e) {
+        this.setData({
+            time: e.detail.value
+        })
+        this._matchObject.time = {
+            desc: e.detail.value,
+            timeType: 'time'
+        }
+    },
+
+    formSubmit: function (e) {
+        const params = e.detail.value
+        if (this._formCheck(params)) {
+            console.log(params)
+            this._createMatch()
+        }
+    },
+    _formCheck(formData) {
+        if (formData.contact === '') {
+            this._showToptip('请填写勾对方式')
+            return false
+        }
+        if (formData.address === '') {
+            this._showToptip('请选择组局地点')
+            return false
+        }
+        return true
+    },
+    chooseAddress() {
+        wx.chooseLocation({
+            success: res => {
+                const latitude = res.latitude
+                const longitude = res.longitude
+                const address = res.address // 详细地址
+                const name = res.name // 地址名
+                this.setData({
+                    selectedAddress: address
+                })
+                this._matchObject.address = {
+                    latitude: latitude,
+                    longitude: longitude,
+                    address: address,
+                    name: name
+                }
+            },
+        })
+    },
+    _createMatch() {
+        console.log(this._matchObject)
     }
 })

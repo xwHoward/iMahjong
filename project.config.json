@@ -28,7 +28,8 @@
 				{
 					"id": -1,
 					"name": "组局",
-					"pathName": "pages/open/open"
+					"pathName": "pages/open/open",
+					"query": ""
 				}
 			]
 		}
