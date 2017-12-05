@@ -20,34 +20,26 @@ Page({
         }]
     },
 
-    onLoad: function(options) {
-        // if (app.globalData.userInfo) {
-        //     this._getUserInfo()
-        // } else {
-        //     app.login()
-        //         .then(() => {
-        //             this._getUserInfo()
-        //         })
-        // }
+    onLoad: function (options) {
         this._locateSelf()
     },
 
-    onReady: function(e) {
+    onReady: function (e) {
         // 使用 wx.createMapContext 获取 map 上下文
         this.mapCtx = wx.createMapContext('map')
     },
-    getCenterLocation: function() {
+    getCenterLocation: function () {
         this.mapCtx.getCenterLocation({
-            success: function(res) {
+            success: function (res) {
                 console.log(res.longitude)
                 console.log(res.latitude)
             }
         })
     },
-    _moveToLocation: function() {
+    _moveToLocation: function () {
         this.mapCtx.moveToLocation()
     },
-    _translateMarker: function(la, lo) {
+    _translateMarker: function (la, lo) {
         this.mapCtx.translateMarker({
             markerId: 0,
             autoRotate: true,
@@ -61,7 +53,7 @@ Page({
             }
         })
     },
-    includePoints: function() {
+    includePoints: function () {
         this.mapCtx.includePoints({
             padding: [10],
             points: [{
@@ -75,49 +67,27 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    _getUserInfo: function() {
-        // 获得当前登录用户
-        const user = AV.User.current();
-        // 调用小程序 API，得到用户信息
-        wx.getUserInfo({
-            success: ({ userInfo }) => {
-                // 更新当前用户的信息
-                user.set(userInfo)
-                    .save()
-                    .then(user => {
-                        // 成功，此时可在控制台中看到更新后的用户信息
-                        app.globalData.user = user.toJSON();
-                        console.log(app.globalData.user)
-                    })
-                    .catch(console.error);
-            }
-        });
-    },
-
-    /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function() {
+    onShow: function () {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function() {
+    onHide: function () {
 
     },
 
-    _locateSelf: function() {
+    _locateSelf: function () {
         wx.getLocation({
             type: 'wgs84',
             success: res => {
                 var latitude = res.latitude
                 var longitude = res.longitude
                 this._moveToLocation()
-                    // this._translateMarker(latitude, longitude)
+                // this._translateMarker(latitude, longitude)
                 this._getNearbyMatches(latitude, longitude)
             }
         })
@@ -126,7 +96,7 @@ Page({
      * 组局
      * 
      */
-    open: function() {
+    open: function () {
         wx.navigateTo({
             url: '/pages/open/open',
         })
@@ -137,26 +107,27 @@ Page({
      * @param {any} latitude 
      * @param {any} longitude 
      */
-    _getNearbyMatches: function(latitude, longitude) {
+    _getNearbyMatches: function (latitude, longitude) {
         AV.Cloud.run('getNearbyMatches', { latitude, longitude })
             .then(res => {
                 if (res.isSuccess) {
                     console.log(res.data)
                     this._renderMarkers(res.data);
                 }
-            }, function(err) {
+            }, function (err) {
                 console.error(err)
             });
     },
     _renderMarkers(matches) {
+        this._markers = markerMaker(matches)
         this.setData({
-            markers: markerMaker(matches)
+            markers: this._markers
         })
     },
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function() {
+    onShareAppMessage: function () {
 
     },
     regionchange(e) {
@@ -170,5 +141,10 @@ Page({
             // 定位
             this._locateSelf()
         }
+    },
+    callouttap(e) {
+        wx.navigateTo({
+            url: `detail/detail?mid=${this._markers[e.markerId].id}`,
+        })
     }
 })

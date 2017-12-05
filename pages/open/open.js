@@ -15,7 +15,7 @@ Page({
         nickName: '未登录',
         groups: groups,
         isGroupCollapse: true,
-        selectedGroup: '不限',
+        selectedGroup: '小鲜肉',
         selectedGroupIndex: 0,
         seats: seats,
         selectedSeat: '三缺一',
@@ -129,6 +129,7 @@ Page({
             selectedGroupIndex: index
         })
         this._matchObject.groupRange = groups[index].range
+        this.toggleGroup()
     },
 
     setSeat: function (e) {
@@ -138,6 +139,7 @@ Page({
             selectedSeatIndex: index
         })
         this._matchObject.seats = seats[index].seat
+        this.toggleSeats()
     },
     setHead: function (e) {
         const index = e.target.dataset.index || e.currentTarget.dataset.index
@@ -145,7 +147,8 @@ Page({
             selectedHead: heads[index],
             selectedHeadIndex: index
         })
-        this._matchObject.head = heads[index]
+        // this._matchObject.head = heads[index]
+        this.toggleHead()
     },
     // setHead(e) {
     //     this.setData({
@@ -171,10 +174,10 @@ Page({
         }
     },
     _formCheck(formData) {
-        if (formData.contact === '') {
-            this._showToptip('请填写勾对方式')
-            return false
-        }
+        // if (formData.contact === '') {
+        //     this._showToptip('请填写勾对方式')
+        //     return false
+        // }
         if (formData.address === '') {
             this._showToptip('请选择组局地点')
             return false

@@ -1,0 +1,98 @@
+page {
+    /* background: #515151 url('https://cdn.dribbble.com/users/49880/screenshots/924534/mahjong.png') 0 -50px no-repeat;
+    background-size: contain; *//* filter: opacity(0.1); *//* filter: brightness(0.1); */
+    background-color: #515151;
+}
+
+.bg_img {
+    width: 100%;
+}
+
+.title {
+    line-height: 100px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+}
+
+.card {
+    box-sizing: border-box;
+    position: relative;
+    width: 650rpx;
+    margin: 0 auto;
+    padding: 30px 15px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.head {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    margin-left: -24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
+
+.row .left {
+    flex: 1 1 auto;
+}
+
+.label {
+    height: 30px;
+    line-height: 30px;
+    color: #515151;
+    font-size: 14px;
+}
+
+.creator {
+    line-height: 30px;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.time {
+    line-height: 30px;
+    color: #f44336;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.date {
+    line-height: 30px;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+}
+
+.row .right {
+    flex: 0 0 80px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.remark {
+    box-sizing: border-box;
+    flex: 0 0 80px;
+    width: 80px;
+    height: 80px;
+    line-height: 20px;
+    padding: 20px 10px;
+    font-size: 12px;
+    color: #333;
+    background: #fff url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAFf0lEQVR4Xu2bW2wUZRTHf2dbCnRnFVGgQKeg+ID6gEYJAR+QoDEYYpTE+y1iohhjNJAgkgioUUKIiTYq+uAFRUICYrwl+qCixkRRiSgxGBXi7rZYkEvcaal0u8fMlmK3l92d/cq4Ozvzut85//P/7fnm8s03QngYERCj6DCYEKBhE4QAQ4CGBAzDww4MARoSMAwPOzAEaEjAMDzswBCgIQHD8LADgwpQ49bNIGtBOxBWie28bej1tISXZQdq0lqCyoYcx5pZLE3tr50WCgZJyw6gxqN3I5FXB3pSBb1d7PbNBn6HPbSsAGoieivIJpAh6tIM6B3lBLFsAJ6E9yZIJH+buBC5sVzOicMOUJOjZ6ORc1EmIpEG0EnABKA2PxiZ621+6ecFxqeBNpAWNNMGtBLJ7JfG41970ylQtWky3c8oamMLgIUoixDGmOY8rfHKUUS3Ipn3pbHjA1OtkjtQD1gX0iWPIHoDyGjTQv6n+HbQt6Brvdj//FZKDZ4BanzkNKTu2WzHBelQ3QKZZdLU0erFlieAmrBWgTzuRaCyxupxYIXYTnOxdRcFUFtj59Ct28Drib7YMspsnPIetalbZBIdhSorCFBbRzfRXfsFMKVQsmD9rj9gOfPkLI7l85UXoB4YNZV07ZcgjcGCU6wb/YmMM1emcHSoiCEB6qH6iXRGvgGxi5UL5jjdDc5ssXHPjwOOQQHqIWJ0WjtBpgcTildX+qnYzvziASas7SDXe5UJ9HjVVdLkPNnf44AO1ET0NohsCjSMUs1p90xp6viub3gOQE0wFo3tQzizVI1Ax6nuwXZmiOAuaGSPfgBjrwCLAw3B2FzmYbHbnxsAsOd+r+Z3kAKrJsYVVHgCPUij0yhCV04HasJqBnmwwt35U75yjzSlsqvm2SmsSh3J2BEg6k8FFa+yU+zUrP8AJqN3opGNFW/LTwMRpsvk1C89HZiw3gG5zk/9itcSVkpjau1JgLHDwNiKN+WvgY/ETi0QPWBdRFr2+KsdCDVH7FRMtMW6iYxsCYQlv01I2hZNWKtB1vitHQg90fkuwOdBHgiEIb9NuPeDGrc2ILLEb+1A6Kk+5gJ8CZH7AmHIdxPaLBqPPYOw1HftYAiud8+Ba0BWB8OPzy6yUzgZuxflZZ+lgyHn7lnUhHUFyGfBcOSzC0nPcZ9ExpGWgz5LB0MumhrT+yz8K3B+MFz55UJ/FHd5v2c1JlzK945dm8V2HuoB2BK7lgzvek9SzRE6T2xnR++KtJC03N2c46oZiQfvf4idmuqOP/VWTuPRp5HIox6SVPHQzHKx29fnAnSvxl0kEamrYjLFWHcYkWqQBtpzAGbPhXHrRUTuLyZL9Y7RJ8R2Tj255b5Y77kn3B++nRuqPfQQOFP67tQauDcmGVuJ8lT1dlge533eB/eOGghQqSFpfQtySQixLwH9RGznyv5MBt8f2DbqPE6M2A1YIcTszoNWamWGTEr9VRTA7AXF/eIoU7Oj6q/KyjFG6OUy0fl5sGbKv0c6UX8N1HxYxV14BO2+uv+ewL48Cu/ST0YvRuVjkPHVBVL3It1XSePxZD7fBQFmp3NbdAInItuBOdUBUbdR49w1LN+J5FyHErF1wPIAQ3S/nVs57F8q5UBstS6gmxdA5gULpG5mpC6T8e1/evFV1BQeLKHG62cikRUgi7wIltVY1U6EN6hLr5MJnftKqa1kgL1iJ7cGL0VlIcK0UorwPUZ1F8Lr1Dsb5Wz+NtE3BpgzvQ9zBp3RWWjkMlQvBaahNCDSYFJk6bHaApJE2Yvo90Rkl0xOfVV6voGRwwpwOAurlFwhQMN/KgQYAjQkYBgedmAI0JCAYXjYgSFAQwKG4WEHhgANCRiGhx0YAjQkYBj+L+3XoSEnqwn/AAAAAElFTkSuQmCC') center center no-repeat;
+}

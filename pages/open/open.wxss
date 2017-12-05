@@ -8,8 +8,8 @@ page {
 } */
 
 .avatar_wrapper {
-    height: 200px;
-    padding-top: 50px;
+    height: 150px;
+    padding-top: 20px;
 }
 
 .avatar {
@@ -60,7 +60,12 @@ page {
     background-color: #626262;
     margin-bottom: 4px;
 }
-
+.bonus{
+    line-height: 30px;
+    padding-left: 30rpx;
+    color: #fff;
+    font-size: 14px;
+}
 .section__title {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 100px;

@@ -12,15 +12,16 @@ const formatNumber = n => {
 
 const markerMaker = matches => {
     return matches.map((el, index) => {
+        const content = `${el.time}\n${el.group}戳我！` + (el.remark ? `\n“${el.remark}”` : '')
         return {
-            iconPath: el.iconPath || "/assets/heads/emoji-1.png",
+            iconPath: el.head || "/assets/heads/emoji-1.png",
             id: index,
-            latitude: el.baseInfo.creatorInfo.latitude,
-            longitude: el.baseInfo.creatorInfo.longitude,
+            latitude: el.creatorInfo.latitude,
+            longitude: el.creatorInfo.longitude,
             width: 32,
             height: 32,
             callout: {
-                content: `${el.baseInfo.time}\n${el.baseInfo.group}\n“${el.baseInfo.remark}”`,
+                content: content,
                 color: '#515151',
                 fontSize: 12,
                 borderRadius: 4,
@@ -29,7 +30,7 @@ const markerMaker = matches => {
                 boxShadow: '0 0 6px 0 #515151',
                 display: 'BYCLICK'
             },
-            label: { color: '#ff9800', fontSize: 12, content: `#${el.baseInfo.seat}#`, x: -24, y: -50 }
+            label: { color: '#ff9800', fontSize: 14, content: `#${el.seat}#`, x: -25, y: -50 }
         }
     })
 }

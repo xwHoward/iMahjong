@@ -6,10 +6,6 @@
 </view>
 <form bindsubmit="formSubmit">
     <view class="section">
-        <view class="section__title">勾对方式</view>
-        <input name="contact" placeholder="微信/电话/其他" />
-    </view>
-    <view class="section">
         <view class="section__title">和哪些组</view>
         <input name="group" placeholder="请选择组局对象" disabled='true' value="{{ selectedGroup }}" class="{{ isGroupCollapse ? 'collapsed' : 'open' }}" bindtap='toggleGroup' />
     </view>
@@ -45,7 +41,12 @@
     </view>
     <view class="section">
         <view class="section__title">在哪儿组</view>
-        <input name="address" placeholder="全成都" disabled='true' value="{{ selectedAddress }}" class="address_picker" bindtap='chooseAddress' />
+        <input name="address" placeholder="请选择组局地点" disabled='true' value="{{ selectedAddress }}" class="address_picker" bindtap='chooseAddress' />
+    </view>
+    <view class="bonus">以下为选填项</view>
+    <view class="section">
+        <view class="section__title">勾对方式</view>
+        <input name="contact" placeholder="微信/电话/其他" />
     </view>
     <view class="section">
         <view class="section__title">备注</view>

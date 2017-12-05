@@ -1,0 +1,20 @@
+<!-- <image src="/assets/images/mahjong.png" mode="widthFix" class="bg_img"></image> -->
+<view class="title">组局信息</view>
+<view class="card">
+    <image class="head" src="{{ head }}"></image>
+    <view class="row">
+        <view class="left">
+            <view class="label">组局者：</view>
+            <view class="creator">大豪爷</view>
+        </view>
+        <image class="right" src="{{ head }}"></image>
+    </view>
+    <view class="row">
+        <view class="left">
+            <view class="label">组局时间：</view>
+            <view class="time">11:00</view>
+            <view class="date">2017-12-03</view>
+        </view>
+        <view class="remark">“j有一些备注”</view>
+    </view>
+</view>

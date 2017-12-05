@@ -41,7 +41,7 @@ const seats = [{
     seat: 3
 }, {
     sid: 3,
-    sdesc: '其他',
+    sdesc: '缺很多',
     vol: 'more',
     seat: -1
 }];
