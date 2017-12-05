@@ -1,44 +1,8 @@
 const AV = require('../../libs/av-weapp-min.js');
 import { timeFormatter } from '../../utils/util.js'
+import { groups, seats, heads } from '../../utils/data.module'
 const app = getApp()
-const groups = [{
-    gid: 0,
-    gdesc: '小鲜肉',
-    vol: '18~25岁'
-}, {
-    gid: 1,
-    gdesc: '老腊肉',
-    vol: '26~30岁'
-}, {
-    gid: 2,
-    gdesc: '老油条',
-    vol: '30~45岁'
-}, {
-    gid: 3,
-    gdesc: '老麻手',
-    vol: '45岁+'
-}, {
-    gid: 4,
-    gdesc: '不限',
-    vol: ''
-}]
-const seats = [{
-    sid: 0,
-    sdesc: '三缺一',
-    vol: '1人'
-}, {
-    sid: 1,
-    sdesc: '差两位',
-    vol: '2人'
-}, {
-    sid: 2,
-    sdesc: '一缺三',
-    vol: '3人'
-}, {
-    sid: 3,
-    sdesc: '其他',
-    vol: 'more'
-}]
+
 Page({
 
     /**
@@ -55,30 +19,39 @@ Page({
         selectedGroupIndex: 0,
         seats: seats,
         selectedSeat: '三缺一',
-        selectedSeatIndex: 4,
+        selectedSeatIndex: 0,
         isSeatsCollapse: true,
+        selectedHead: '/assets/heads/emoji-1.png',
+        selectedHeadIndex: 0,
+        isHeadCollapse: true,
         selectedAddress: '',
         now: timeFormatter(new Date()),
-        time: '全天'
+        time: '全天',
+        heads: heads
     },
     _matchObject: {
-        time: {
-            desc: '全天',
-            timeType: 'all'
-        }
+        groupRange: [18, 99],
+        seats: 1,
+        _time: {
+            value: 'ALL',
+            type: 'ALL'
+        },
+        creatorInfo: {}
+
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
         if (app.globalData.userInfo) {
-            this.getUserInfo()
+            this._getUserInfo()
         } else {
             app.login()
                 .then(() => {
                     this._getUserInfo()
                 })
         }
+        this._locateSelf()
     },
     _toptipTimer: null,
     _showToptip: function (msg) {
@@ -96,11 +69,17 @@ Page({
         }, 2000)
     },
 
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
+    _locateSelf: function () {
+        wx.getLocation({
+            type: 'wgs84',
+            success: res => {
+                var latitude = res.latitude
+                var longitude = res.longitude
+                this._matchObject.creatorLocation = { latitude, longitude }
+                Object.assign(this._matchObject.creatorInfo, this._matchObject.creatorLocation)
 
+            }
+        })
     },
 
     _getUserInfo: function () {
@@ -115,10 +94,11 @@ Page({
                     .then(user => {
                         // 成功，此时可在控制台中看到更新后的用户信息
                         app.globalData.user = user.toJSON();
-                        this.setData({
-                            avatarUrl: app.globalData.user.avatarUrl,
-                            nickName: app.globalData.user.nickName
-                        })
+                        const avatarUrl = app.globalData.user.avatarUrl
+                        const nickName = app.globalData.user.nickName
+                        const gender = app.globalData.user.gender
+                        this.setData({ avatarUrl, nickName })
+                        Object.assign(this._matchObject.creatorInfo, { avatarUrl, nickName, gender })
                     })
                     .catch(console.error);
             }
@@ -136,6 +116,11 @@ Page({
             isSeatsCollapse: !this.data.isSeatsCollapse
         })
     },
+    toggleHead: function (e) {
+        this.setData({
+            isHeadCollapse: !this.data.isHeadCollapse
+        })
+    },
 
     setGroup: function (e) {
         const index = e.target.dataset.index || e.currentTarget.dataset.index
@@ -143,6 +128,7 @@ Page({
             selectedGroup: groups[index].gdesc,
             selectedGroupIndex: index
         })
+        this._matchObject.groupRange = groups[index].range
     },
 
     setSeat: function (e) {
@@ -151,15 +137,29 @@ Page({
             selectedSeat: seats[index].sdesc,
             selectedSeatIndex: index
         })
+        this._matchObject.seats = seats[index].seat
     },
-
+    setHead: function (e) {
+        const index = e.target.dataset.index || e.currentTarget.dataset.index
+        this.setData({
+            selectedHead: heads[index],
+            selectedHeadIndex: index
+        })
+        this._matchObject.head = heads[index]
+    },
+    // setHead(e) {
+    //     this.setData({
+    //         head: `/assets/heads/emoji-${e.target.dataset.id}.png`
+    //     })
+    //     this.topicId = e.target.dataset.tid
+    // }
     bindTimeChange: function (e) {
         this.setData({
             time: e.detail.value
         })
-        this._matchObject.time = {
-            desc: e.detail.value,
-            timeType: 'time'
+        this._matchObject._time = {
+            value: e.detail.value,
+            type: 'time'
         }
     },
 
@@ -167,7 +167,7 @@ Page({
         const params = e.detail.value
         if (this._formCheck(params)) {
             console.log(params)
-            this._createMatch()
+            this._createMatch(params)
         }
     },
     _formCheck(formData) {
@@ -194,13 +194,22 @@ Page({
                 this._matchObject.address = {
                     latitude: latitude,
                     longitude: longitude,
-                    address: address,
-                    name: name
+                    address: address
                 }
             },
         })
     },
-    _createMatch() {
-        console.log(this._matchObject)
+    _createMatch(params) {
+        Object.assign(this._matchObject, params)
+        AV.Cloud.run('createMatch', this._matchObject)
+            .then(res => {
+                if (res.isSuccess) {
+                    wx.redirectTo({
+                        url: '/pages/result/result?type=success',
+                    })
+                }
+            }, function (err) {
+                console.error(err)
+            });
     }
 })

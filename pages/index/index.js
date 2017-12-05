@@ -1,28 +1,12 @@
 const AV = require('../../libs/av-weapp-min.js');
+import { markerMaker } from '../../utils/util.js'
 const app = getApp()
 const mapHeight = app.globalData.windowHeight - 60
+
 Page({
     data: {
         mapHeight: mapHeight,
-        markers: [{
-            iconPath: "/assets/heads/emoji-1.png",
-            id: 0,
-            latitude: 30.66074,
-            longitude: 104.063269,
-            width: 32,
-            height: 32,
-            callout: {
-                content: '待约',
-                color: '#515151',
-                fontSize: 12,
-                borderRadius: 4,
-                bgColor: '#ffe30d',
-                padding: 4,
-                boxShadow: '0 0 6px 0 #515151',
-                display: 'ALWAYS'
-            },
-            // label: { color:'#ff9800', fontSize:12, content:'label', x:10, y:0 }
-        }],
+        markers: [],
         controls: [{
             id: 1,
             iconPath: '/assets/images/location.png',
@@ -36,7 +20,7 @@ Page({
         }]
     },
 
-    onLoad: function (options) {
+    onLoad: function(options) {
         // if (app.globalData.userInfo) {
         //     this._getUserInfo()
         // } else {
@@ -45,24 +29,25 @@ Page({
         //             this._getUserInfo()
         //         })
         // }
+        this._locateSelf()
     },
 
-    onReady: function (e) {
+    onReady: function(e) {
         // 使用 wx.createMapContext 获取 map 上下文
         this.mapCtx = wx.createMapContext('map')
     },
-    getCenterLocation: function () {
+    getCenterLocation: function() {
         this.mapCtx.getCenterLocation({
-            success: function (res) {
+            success: function(res) {
                 console.log(res.longitude)
                 console.log(res.latitude)
             }
         })
     },
-    _moveToLocation: function () {
+    _moveToLocation: function() {
         this.mapCtx.moveToLocation()
     },
-    _translateMarker: function (la, lo) {
+    _translateMarker: function(la, lo) {
         this.mapCtx.translateMarker({
             markerId: 0,
             autoRotate: true,
@@ -76,7 +61,7 @@ Page({
             }
         })
     },
-    includePoints: function () {
+    includePoints: function() {
         this.mapCtx.includePoints({
             padding: [10],
             points: [{
@@ -92,7 +77,7 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    _getUserInfo: function () {
+    _getUserInfo: function() {
         // 获得当前登录用户
         const user = AV.User.current();
         // 调用小程序 API，得到用户信息
@@ -114,49 +99,64 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
+    onShow: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
-    _locate: function () {
+    _locateSelf: function() {
         wx.getLocation({
             type: 'wgs84',
             success: res => {
                 var latitude = res.latitude
                 var longitude = res.longitude
                 this._moveToLocation()
-                this._translateMarker(latitude, longitude)
+                    // this._translateMarker(latitude, longitude)
+                this._getNearbyMatches(latitude, longitude)
             }
         })
     },
-
     /**
-     * 页面相关事件处理函数--监听用户下拉动作
+     * 组局
+     * 
      */
-    open: function () {
+    open: function() {
         wx.navigateTo({
             url: '/pages/open/open',
         })
     },
-
     /**
-     * 页面上拉触底事件的处理函数
+     * 获取附近的局
+     * 
+     * @param {any} latitude 
+     * @param {any} longitude 
      */
-    onReachBottom: function () {
-
+    _getNearbyMatches: function(latitude, longitude) {
+        AV.Cloud.run('getNearbyMatches', { latitude, longitude })
+            .then(res => {
+                if (res.isSuccess) {
+                    console.log(res.data)
+                    this._renderMarkers(res.data);
+                }
+            }, function(err) {
+                console.error(err)
+            });
     },
-
+    _renderMarkers(matches) {
+        this.setData({
+            markers: markerMaker(matches)
+        })
+    },
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     },
     regionchange(e) {
@@ -168,7 +168,7 @@ Page({
     controltap(e) {
         if (e.controlId === 1) {
             // 定位
-            this._locate()
+            this._locateSelf()
         }
     }
 })

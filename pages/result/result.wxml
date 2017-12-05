@@ -1,0 +1,31 @@
+<view class="icon-container">
+    <block wx:if="{{ iconType === 'success' }}">
+        <icon type="success" size="100" />
+        <view class="title">组局成功</view>
+        <view class="info">相信很快就能凑满一桌，哈哈~</view>
+    </block>
+    <block wx:if="{{ iconType === 'waiting' }}">
+        <icon type="waiting" size="100" />
+        <view class="title">正在确认...</view>
+        <view class="info">请等待操作确认结果</view>
+    </block>
+    <block wx:if="{{ iconType === 'cancel' }}">
+        <icon type="cancel" size="100" />
+        <view class="title cancel">组局失败</view>
+        <view class="info">重试一下吧~</view>
+    </block>
+    <block wx:if="{{ iconType === 'info' }}">
+        <icon type="info" size="100" />
+        <view class="title">提示</view>
+        <view class="info">请等待操作确认结果</view>
+    </block>
+    <block wx:if="{{ iconType === 'warn' }}">
+        <icon type="warn" size="100" />
+        <view class="title">警告</view>
+        <view class="info">请等待操作确认结果</view>
+    </block>
+</view>
+<view class="button-group">
+    <button type='primary' bindtap='goToIndex'>回到首页</button>
+    <button type='default' bindtap='goToMine'>查看组局</button>
+</view>

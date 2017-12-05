@@ -13,8 +13,8 @@
         <view class="section__title">和哪些组</view>
         <input name="group" placeholder="请选择组局对象" disabled='true' value="{{ selectedGroup }}" class="{{ isGroupCollapse ? 'collapsed' : 'open' }}" bindtap='toggleGroup' />
     </view>
-    <scroll-view class="selection_group" scroll-x style="height: {{ isGroupCollapse ? '0' : '90px' }}">
-        <view class="selection_wrapper">
+    <scroll-view class="selection_group" scroll-x style="height: {{ isGroupCollapse ? '0' : '100px' }}">
+        <view class="selection_wrapper" style="width:450px;">
             <block wx:for="{{ groups }}" wx:key="gid">
                 <view class="selection{{ selectedGroupIndex === index ? ' selected' : '' }}" bindtap='setGroup' data-index="{{ index }}">
                     <view class="group">{{ item.gdesc }}</view>
@@ -27,8 +27,8 @@
         <view class="section__title">缺几个</view>
         <input name="seat" placeholder="请选择组局人数" disabled='true' value="{{ selectedSeat }}" class="{{ isSeatsCollapse ? 'collapsed' : 'open' }}" bindtap='toggleSeats' />
     </view>
-    <scroll-view class="selection_group" scroll-x style="height: {{ isSeatsCollapse ? '0' : '90px' }}">
-        <view class="selection_wrapper">
+    <scroll-view class="selection_group" scroll-x style="height: {{ isSeatsCollapse ? '0' : '100px' }}">
+        <view class="selection_wrapper" style="width:360px;">
             <block wx:for="{{ seats }}" wx:key="sid">
                 <view class="selection{{ selectedSeatIndex === index ? ' selected' : '' }}" bindtap='setSeat' data-index="{{ index }}">
                     <view class="group">{{ item.sdesc }}</view>
@@ -43,34 +43,41 @@
             <input name="time" placeholder="全天" disabled='true' value="{{ time }}" class="time_picker" bindtap='toggleGroup' />
         </picker>
     </view>
-    <!-- <view class="section section_gap">
-        <view class="section__title">switch</view>
-        <switch name="switch" />
-    </view> -->
     <view class="section">
         <view class="section__title">在哪儿组</view>
         <input name="address" placeholder="全成都" disabled='true' value="{{ selectedAddress }}" class="address_picker" bindtap='chooseAddress' />
     </view>
-
-    <!-- <view class="section section_gap">
-        <view class="section__title">radio</view>
-        <radio-group name="radio-group">
-            <label>
-                <radio value="radio1" />radio1</label>
-            <label>
-                <radio value="radio2" />radio2</label>
-        </radio-group>
-    </view> -->
-    <!-- <view class="section section_gap">
-        <view class="section__title">checkbox</view>
-        <checkbox-group name="checkbox">
-            <label>
-                <checkbox value="checkbox1" />checkbox1</label>
-            <label>
-                <checkbox value="checkbox2" />checkbox2</label>
-        </checkbox-group>
-    </view> -->
+    <view class="section">
+        <view class="section__title">备注</view>
+        <input name="remark" placeholder="10个字以内哈" maxlength="10" />
+    </view>
+    <view class="section">
+        <view class="section__title">选个头像</view>
+        <view class="head_wrapper {{ isHeadCollapse ? 'collapsed' : 'open' }}" bindtap='toggleHead'>
+            <image src="{{ selectedHead }}" class="head"></image>
+        </view>
+    </view>
+    <scroll-view class="selection_group" scroll-x style="height: {{ isHeadCollapse ? '0' : '100px' }}">
+        <view class="selection_wrapper" style="width:780px;">
+            <block wx:for="{{ heads }}" wx:key="index">
+                <image class="head{{ selectedHeadIndex === index ? ' selected' : '' }}" src='{{ item }}' bindtap='setHead' data-index="{{ index }}"></image>
+            </block>
+        </view>
+    </scroll-view>
     <view class="btn-area">
         <button formType="submit" class="btn">开整</button>
     </view>
+    <input class='fake_input' name="head" disabled='true' value="{{ selectedHead }}" />
 </form>
+<!-- <view class="backdrop" wx:if="{{ isTopicBoxShow }}" bindtap='hideTopicBox'>
+    <view class="topic_box">
+        <view class="tb_head">选择一个头像
+            <view class="close" bindtap='hideTopicBox'>X</view>
+        </view>
+        <scroll-view scroll-y style="height: 270px;">
+            <block wx:for="{{ heads }}">
+                <image src="{{ item }}" class='head' bindtap='setHead' data-id="{{ index+1 }}"></image>
+            </block>
+        </scroll-view>
+    </view>
+</view> -->
