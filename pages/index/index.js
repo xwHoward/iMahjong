@@ -111,7 +111,7 @@ Page({
         AV.Cloud.run('getNearbyMatches', { latitude, longitude })
             .then(res => {
                 if (res.isSuccess) {
-                    console.log(res.data)
+                    this._nearbyMatches = res.data
                     this._renderMarkers(res.data);
                 }
             }, function (err) {
@@ -144,7 +144,7 @@ Page({
     },
     callouttap(e) {
         wx.navigateTo({
-            url: `detail/detail?mid=${this._markers[e.markerId].id}`,
+            url: `detail/detail?mid=${this._nearbyMatches[e.markerId].id}`,
         })
     }
 })

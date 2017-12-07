@@ -6,7 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        head:'/assets/heads/emoji-5.png'
+        head: '/assets/heads/emoji-5.png'
     },
 
     /**
@@ -25,7 +25,17 @@ Page({
     },
 
     _initData: function (mid) {
-
+        AV.Cloud.run('getMatchDetail', { matchId: mid })
+            .then(res => {
+                if (res.isSuccess) {
+                    console.log(res.data)
+                    this.setData({
+                        match: res.data
+                    })
+                }
+            }, function (err) {
+                console.error(err)
+            });
     },
 
     /**

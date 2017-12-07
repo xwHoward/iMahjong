@@ -1,20 +1,33 @@
-<!-- <image src="/assets/images/mahjong.png" mode="widthFix" class="bg_img"></image> -->
+<!-- <image src="/assets/images/mahjong.png" mode="widthFix" class="bg_img"></image>  -->
 <view class="title">组局信息</view>
 <view class="card">
-    <image class="head" src="{{ head }}"></image>
+    <image class="head" src="{{ match.head }}"></image>
     <view class="row">
         <view class="left">
             <view class="label">组局者：</view>
-            <view class="creator">大豪爷</view>
+            <view class="creator">{{ match.creatorInfo.nickName }}</view>
         </view>
-        <image class="right" src="{{ head }}"></image>
+        <image class="right" src="{{ match.creatorInfo.avatarUrl }}"></image>
     </view>
     <view class="row">
         <view class="left">
             <view class="label">组局时间：</view>
-            <view class="time">11:00</view>
+            <view class="time">{{ match.time }}</view>
             <view class="date">2017-12-03</view>
         </view>
-        <view class="remark">“j有一些备注”</view>
+        <view class="remark">“{{ match.remark }}”</view>
     </view>
+    <view class="mid_head">
+        <view>想和谁打</view>
+        <view>还差几位</view>
+    </view>
+    <view class="mid_body">
+        <view>{{ match.group }}</view>
+        <view>{{ match.seat }}</view>
+    </view>
+    <view class="left_circle"></view>
+    <view class="right_circle"></view>
+    <view class="match_place">组局地点</view>
+    <map id="map" longitude="{{ match.creatorInfo.longitude }}" latitude="{{ match.creatorInfo.latitude }}" scale="14" show-location show-location="true"></map>
 </view>
+<button class="btn" bindtap='open'>和组局者打个招呼</button>
