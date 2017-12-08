@@ -12,12 +12,46 @@ Page({
             iconPath: '/assets/images/location.png',
             position: {
                 left: 10,
-                top: mapHeight - 50,
-                width: 32,
-                height: 32
+                top: mapHeight - 70,
+                width: 48,
+                height: 48
             },
             clickable: true
-        }]
+        },
+        {
+            id: 2,
+            iconPath: '/assets/images/setting.png',
+            position: {
+                left: 10,
+                top: mapHeight - 140,
+                width: 48,
+                height: 48
+            },
+            clickable: true
+        },
+        {
+            id: 3,
+            iconPath: '/assets/images/search-4.png',
+            position: {
+                left: 10,
+                top: mapHeight - 210,
+                width: 48,
+                height: 48
+            },
+            clickable: true
+        }
+            // , {
+            //     id: 4,
+            //     iconPath: '/assets/images/search-2.png',
+            //     position: {
+            //         left: 10,
+            //         top: mapHeight - 280,
+            //         width: 117,
+            //         height: 64
+            //     },
+            //     clickable: true
+            // }
+        ]
     },
 
     onLoad: function (options) {
@@ -137,9 +171,15 @@ Page({
         console.log(e.markerId)
     },
     controltap(e) {
-        if (e.controlId === 1) {
-            // 定位
-            this._locateSelf()
+        switch (e.controlId) {
+            case 1:
+                // 定位
+                this._locateSelf()
+                break;
+            case 2:
+                wx.navigateTo({
+                    url: '/pages/setting/message/message',
+                })
         }
     },
     callouttap(e) {

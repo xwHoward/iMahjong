@@ -3,6 +3,8 @@
         "pages/index/index",
         "pages/index/detail/detail",
         "pages/open/open",
+        "pages/setting/setting",
+        "pages/setting/message/message",
         "pages/result/result"
     ],
     "window": {

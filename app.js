@@ -1,5 +1,10 @@
 const AV = require('libs/av-weapp-min.js');
+const Realtime = require('libs/realtime.weapp.min.js').Realtime;
 AV.init({
+    appId: '3dR2Vsi36Ru3Dq7z7DmbUTN5-gzGzoHsz',
+    appKey: '0vvS7YjyKuQVFVtn2PAGT6I5',
+});
+const realtime = new Realtime({
     appId: '3dR2Vsi36Ru3Dq7z7DmbUTN5-gzGzoHsz',
     appKey: '0vvS7YjyKuQVFVtn2PAGT6I5',
 });
@@ -67,6 +72,7 @@ App({
             showCancel: false
         })
     },
+    realtime: realtime,
     globalData: {
         userInfo: null,
         windowHeight: 500

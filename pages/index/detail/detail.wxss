@@ -1,7 +1,9 @@
 page {
-    /* background: #515151 url('https://cdn.dribbble.com/users/49880/screenshots/924534/mahjong.png') 0 -50px no-repeat;
-    background-size: contain; *//* filter: opacity(0.1); *//* filter: brightness(0.1); */
+     /* background: #515151 url('https://cdn.dribbble.com/users/49880/screenshots/924534/mahjong.png') 0 -50px no-repeat; */
+    background-size: contain; 
+    /* filter: opacity(0.1); *//* filter: brightness(0.1); */
     background-color: #515151;
+    padding-bottom: 50px;
 }
 
 .bg_img {
@@ -154,15 +156,17 @@ page {
     font-size: 16px;
     text-align: center;
 }
-#map{
+
+#map {
     width: 650rpx;
     height: 150px;
     margin-left: -15px;
 }
+
 .btn {
     height: 60px;
     line-height: 60px;
-    margin: 50px 50rpx;
+    margin: 50px 50rpx 0;
     color: #515151;
     letter-spacing: 4px;
     background-color: #ffe30d;
