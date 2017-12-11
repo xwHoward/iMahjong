@@ -22,7 +22,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 0,
 			"list": [
 				{
 					"id": -1,
@@ -35,6 +35,12 @@
 					"name": "详情",
 					"pathName": "pages/index/detail/detail",
 					"query": "mid=5a26b0598d6d8100619825fd"
+				},
+				{
+					"id": -1,
+					"name": "列表",
+					"pathName": "pages/index/list/list",
+					"query": ""
 				}
 			]
 		}

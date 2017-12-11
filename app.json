@@ -2,6 +2,7 @@
     "pages": [
         "pages/index/index",
         "pages/index/detail/detail",
+        "pages/index/list/list",
         "pages/open/open",
         "pages/setting/setting",
         "pages/setting/message/message",

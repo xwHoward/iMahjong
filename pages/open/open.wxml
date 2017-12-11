@@ -35,8 +35,8 @@
     </scroll-view>
     <view class="section">
         <view class="section__title">好久组</view>
-        <picker mode="time" value="{{ time }}" start="{{ now }}" end="11:59" bindchange="bindTimeChange">
-            <input name="time" placeholder="全天" disabled='true' value="{{ time }}" class="time_picker" bindtap='toggleGroup' />
+        <picker mode="time" value="{{ time }}" start="{{ now }}" end="23:59" bindchange="bindTimeChange">
+            <input name="time" placeholder="请选择组局时间" disabled='true' value="{{ time }}" class="time_picker" bindtap='toggleGroup' />
         </picker>
     </view>
     <view class="section">

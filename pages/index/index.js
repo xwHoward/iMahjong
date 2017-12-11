@@ -179,7 +179,15 @@ Page({
             case 2:
                 wx.navigateTo({
                     url: '/pages/setting/message/message',
-                })
+                });
+                break;
+            case 3:
+                wx.navigateTo({
+                    url: '/pages/index/list/list',
+                });
+                break;
+            default:
+                break;
         }
     },
     callouttap(e) {

@@ -1,0 +1,26 @@
+<view class="filter" bindtap="setFilter">{{ currentFilterName }}
+    <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAfUlEQVRYR+2UsQ3AMAgEYbOMks2sTIpFl8IJz7tw89TAn04Ct8Plh/NNADIgAzIgA6WBiLjNbJAv+3H3nP+sEiAnSYgyPHdDAAQEFN4CaEDA4W0AAKIVTgH8QLTDaYAFBBW+BfCCuKpT2z5D8gdAY/AZQtuIJgHIgAzIgAxMs5InIRDT3dIAAAAASUVORK5CYII="
+        class="caret"></image>
+</view>
+<view class="list">
+    <block wx:for="{{ matches }}" wx:key="id">
+        <view class="match">
+            <image src="{{ item.creatorInfo.avatarUrl }}" class="avatar"></image>
+            <image src="{{ item.head }}" class="head"></image>
+            <view class="nickname">{{ item.creatorInfo.nickName }}
+                <image src="{{ item.creatorInfo.gender === 1 ? '/assets/images/male.png' : '/assets/images/female.png' }}" class="gender"></image>
+            </view>
+            <view class="address" wx:if="{{ currentFilterType === 'address' }}">{{ item.address }}</view>
+            <view class="seat seat_1" wx:if="{{ currentFilterType === 'seat' && item._seat === 1 }}">{{ item.seat }}</view>
+            <view class="seat seat_2" wx:if="{{ currentFilterType === 'seat' && item._seat === 2 }}">{{ item.seat }}</view>
+            <view class="seat seat_3" wx:if="{{ currentFilterType === 'seat' && item._seat === 3 }}">{{ item.seat }}</view>
+            <view class="seat seat_-1" wx:if="{{ currentFilterType === 'seat' && item._seat === -1 }}">{{ item.seat }}</view>
+            <view class="time" wx:if="{{ currentFilterType === 'time' }}">{{ item.time }}</view>
+            <view class="group" wx:if="{{ currentFilterType === 'group' }}">{{ item.group }}</view>
+        </view>
+    </block>
+</view>
+<view class="placeholder" wx:if="{{ matches.length === 0 }}">
+    <image src="/assets/images/empty.png"></image>
+    <view class="nothing">居然一桌都没找到，看来你是需要戒麻了┑(￣Д ￣)┍</view>
+</view>

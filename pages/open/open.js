@@ -26,16 +26,13 @@ Page({
         isHeadCollapse: true,
         selectedAddress: '',
         now: timeFormatter(new Date()),
-        time: '全天',
+        time: null,
         heads: heads
     },
     _matchObject: {
         groupRange: [18, 99],
         seats: 1,
-        _time: {
-            value: 'ALL',
-            type: 'ALL'
-        },
+        startAt: new Date(),
         creatorInfo: {}
 
     },
@@ -160,10 +157,8 @@ Page({
         this.setData({
             time: e.detail.value
         })
-        this._matchObject._time = {
-            value: e.detail.value,
-            type: 'time'
-        }
+        const startAt = e.detail.value.split(':');
+        this._matchObject.startAt = (new Date()).setHours(startAt[0],startAt[1])
     },
 
     formSubmit: function (e) {
@@ -174,10 +169,10 @@ Page({
         }
     },
     _formCheck(formData) {
-        // if (formData.contact === '') {
-        //     this._showToptip('请填写勾对方式')
-        //     return false
-        // }
+        if (formData.time === '') {
+            this._showToptip('请填写组局时间')
+            return false
+        }
         if (formData.address === '') {
             this._showToptip('请选择组局地点')
             return false
@@ -209,6 +204,10 @@ Page({
                 if (res.isSuccess) {
                     wx.redirectTo({
                         url: '/pages/result/result?type=success',
+                    })
+                }else{
+                    wx.redirectTo({
+                        url: '/pages/result/result?type=cancel',
                     })
                 }
             }, function (err) {
