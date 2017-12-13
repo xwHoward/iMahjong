@@ -4,7 +4,7 @@
     <image src="{{ avatarUrl }}" mode="aspectFit" class="avatar"></image>
     <view class="nickname"> {{ nickName }} </view>
 </view>
-<form bindsubmit="formSubmit">
+<form bindsubmit="formSubmit" report-submit="true">
     <view class="section">
         <view class="section__title">和哪些组</view>
         <input name="group" placeholder="请选择组局对象" disabled='true' value="{{ selectedGroup }}" class="{{ isGroupCollapse ? 'collapsed' : 'open' }}" bindtap='toggleGroup' />

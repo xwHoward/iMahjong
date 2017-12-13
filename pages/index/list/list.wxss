@@ -115,9 +115,6 @@ page {
 .seat.seat_3 {
     color: #ffc107;
 }
-.seat.seat_-1 {
-    color: #cddc39;
-}
 
 .placeholder image {
     display: block;

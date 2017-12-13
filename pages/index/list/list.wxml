@@ -14,7 +14,6 @@
             <view class="seat seat_1" wx:if="{{ currentFilterType === 'seat' && item._seat === 1 }}">{{ item.seat }}</view>
             <view class="seat seat_2" wx:if="{{ currentFilterType === 'seat' && item._seat === 2 }}">{{ item.seat }}</view>
             <view class="seat seat_3" wx:if="{{ currentFilterType === 'seat' && item._seat === 3 }}">{{ item.seat }}</view>
-            <view class="seat seat_-1" wx:if="{{ currentFilterType === 'seat' && item._seat === -1 }}">{{ item.seat }}</view>
             <view class="time" wx:if="{{ currentFilterType === 'time' }}">{{ item.time }}</view>
             <view class="group" wx:if="{{ currentFilterType === 'group' }}">{{ item.group }}</view>
         </view>

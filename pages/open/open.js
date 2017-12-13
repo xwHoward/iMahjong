@@ -30,7 +30,7 @@ Page({
         heads: heads
     },
     _matchObject: {
-        groupRange: [18, 99],
+        groupRange: [18, 25],
         seats: 1,
         startAt: new Date(),
         creatorInfo: {}
@@ -158,14 +158,15 @@ Page({
             time: e.detail.value
         })
         const startAt = e.detail.value.split(':');
-        this._matchObject.startAt = (new Date()).setHours(startAt[0],startAt[1])
+        this._matchObject.startAt = (new Date()).setHours(startAt[0], startAt[1])
     },
 
     formSubmit: function (e) {
         const params = e.detail.value
+        const formId = e.detail.formId
         if (this._formCheck(params)) {
             console.log(params)
-            this._createMatch(params)
+            this._createMatch(params, formId)
         }
     },
     _formCheck(formData) {
@@ -197,15 +198,16 @@ Page({
             },
         })
     },
-    _createMatch(params) {
-        Object.assign(this._matchObject, params)
+    _createMatch(params, formId) {
+        Object.assign(this._matchObject, params, { formId })
+        console.log(this._matchObject)
         AV.Cloud.run('createMatch', this._matchObject)
             .then(res => {
                 if (res.isSuccess) {
                     wx.redirectTo({
                         url: '/pages/result/result?type=success',
                     })
-                }else{
+                } else {
                     wx.redirectTo({
                         url: '/pages/result/result?type=cancel',
                     })
